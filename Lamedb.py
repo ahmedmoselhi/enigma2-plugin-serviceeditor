@@ -1,23 +1,23 @@
-import thread
+import _thread
 class Lamedb:
 	def __init__(self):
 		self.readcnt = 0
 		self.database = {}
 		self.databaseState=0
-		thread.start_new_thread(self._initDatabase,(None,))
+		_thread.start_new_thread(self._initDatabase,(None,))
 #		self._initDatabase(None,)
 		
 	def _initDatabase(self,dummy):
 		self.database.clear()
 		self.databaseState=0
-		print "phase1"
+		print("phase1")
 		self.translateTransponders(self.getTransponders(self.readLamedb()))
-		print "phase2"
+		print("phase2")
 		self.translateServices(self.getServices(self.readLamedb()))
-		print "phase3"
+		print("phase3")
 
 	def readLamedb(self):
-		f = file("/etc/enigma2/lamedb","r")
+		f = open("/etc/enigma2/lamedb","r")
 		lamedb = f.readlines()
 		f.close()
 		if lamedb[0].find("/3/") != -1:
@@ -25,14 +25,14 @@ class Lamedb:
 		elif lamedb[0].find("/4/") != -1:
 			self.version = 4
 		else:
-			print "unbekante Version: ",lamedb[0]
+			print("unbekante Version: ",lamedb[0])
 			return
-		print "import version %d" % self.version
+		print("import version %d" % self.version)
 		return lamedb
 
 	def writeLamedb(self,version = 4):
-		if version <> 4:
-			print "only version 4 yet"
+		if version != 4:
+			print("only version 4 yet")
 			return
 		puffer = []
 		puffer.append("eDVB services /4/\n")
@@ -73,18 +73,18 @@ class Lamedb:
 				puffer.append(("p:%s%s\n")%(service["provider"],tmp))
 		puffer.append("end\n")
 		puffer.append("Have a lot of girls\n")
-		f = file("/etc/enigma2/lamedb","w")
+		f = open("/etc/enigma2/lamedb","w")
 		f.writelines(puffer)
 		f.close()
 		
 	def getServices(self, lamedb):
-		print "getServices",
+		print("getServices", end=' ')
 		if lamedb is None:
 			return
 		collect = False
 		state = 0
 		services = []
-		for x in xrange(len(lamedb)-2):
+		for x in range(len(lamedb)-2):
 			if lamedb[x] == "services\n":
 				collect = True
 				continue
@@ -106,7 +106,7 @@ class Lamedb:
 						else:
 							services.append((lamedb[x],lamedb[x+1],lamedb[x+2],))
 #							self.translateService((lamedb[x],lamedb[x+1],lamedb[x+2],))
-		print " fertig"
+		print(" fertig")
 		return services
 	
 	
@@ -117,9 +117,9 @@ class Lamedb:
 		service = {}
 		tp_data = serviceData[0].strip().split(":")
 		if len(tp_data) > len(t1):
-			print "falsche Anzahl Parameter (6 erwartet) in ",serviceData[0]
+			print("falsche Anzahl Parameter (6 erwartet) in ",serviceData[0])
 			return
-		for y in xrange(len(t1)):
+		for y in range(len(t1)):
 			service.update({t1[y]:tp_data[y]})
 		name = serviceData[1].strip().replace('\xc2\x86', '').replace('\xc2\x87', '')
 		service.update({"name":name})
@@ -144,8 +144,8 @@ class Lamedb:
 			elif raw[0]=="f":
 				service["flags"] = raw[1].strip()
 			else:
-				print "unbekanter Parameter:",raw[0]
-				print "in:",y
+				print("unbekanter Parameter:",raw[0])
+				print("in:",y)
 #			else:
 #				print "hmm, da stimmt was mit den Daten nicht:",raw
 #				break
@@ -243,21 +243,21 @@ class Lamedb:
 			return
 		for x in transponders:
 			if len(x[0]) > len(t1):
-				print "zu viele Parameter (t1) in ",x[0]
+				print("zu viele Parameter (t1) in ",x[0])
 				continue
 			freq = x[1][0].split()
 			if len(freq) != 2:
-				print "zwei Parameter erwartet in ",freq
+				print("zwei Parameter erwartet in ",freq)
 				continue
 			tp = {"services":[]}
 			x[1][0] = freq[1]
 			if freq[0] == "s" or freq[0] == "S":
 				if ((self.version == 3) and len(x[1]) > len(t2_sv3)) or ((self.version == 4) and len(x[1]) > len(t2_sv4)):
-					print "zu viele Parameter (t2) in ",x[1]
+					print("zu viele Parameter (t2) in ",x[1])
 					continue
-				for y in xrange(len(x[0])):
+				for y in range(len(x[0])):
 					tp.update({t1[y]:x[0][y]})
-				for y in xrange(len(x[1])):
+				for y in range(len(x[1])):
 					if self.version == 3:	
 						tp.update({t2_sv3[y]:x[1][y]})
 					elif self.version == 4:
@@ -266,29 +266,29 @@ class Lamedb:
 				if pos > 1799:
 					pos -= 3600
 				if pos != int(tp.get("position")):
-					print "Namespace %s und Position %s sind  nicht identisch"% (tp.get("namespace"), tp.get("position"))
+					print("Namespace %s und Position %s sind  nicht identisch"% (tp.get("namespace"), tp.get("position")))
 					continue
 				self.database[tp["namespace"]+tp["tsid"]+tp["onid"]] = tp
 				self.database[tp["namespace"]+tp["tsid"]+tp["onid"]]["services"] = {}
 				self.databaseState=1
 			elif freq[0] == "c" or freq[0] == "C":
 				if len(x[1]) > len(t2_c):
-					print "zu viele Parameter (t2) in ",x[1]
+					print("zu viele Parameter (t2) in ",x[1])
 					continue
-				for y in xrange(len(x[0])):
+				for y in range(len(x[0])):
 					tp.update({t1[y]:x[0][y]})
-				for y in xrange(len(x[1])):
+				for y in range(len(x[1])):
 					tp.update({t2_c[y]:x[1][y]})
 				self.database[tp["namespace"]+tp["tsid"]+tp["onid"]] = tp
 				self.database[tp["namespace"]+tp["tsid"]+tp["onid"]]["services"] = {}
 				self.databaseState=1
 			elif freq[0] == "t" or freq[0] == "T":
 				if len(x[1]) > len(t2_t):
-					print "zu viele Parameter (t2) in ",x[1]
+					print("zu viele Parameter (t2) in ",x[1])
 					continue
-				for y in xrange(len(x[0])):
+				for y in range(len(x[0])):
 					tp.update({t1[y]:x[0][y]})
-				for y in xrange(len(x[1])):
+				for y in range(len(x[1])):
 					tp.update({t2_t[y]:x[1][y]})
 				self.database[tp["namespace"]+tp["tsid"]+tp["onid"]] = tp
 				self.database[tp["namespace"]+tp["tsid"]+tp["onid"]]["services"] = {}

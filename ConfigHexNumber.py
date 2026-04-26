@@ -1,4 +1,5 @@
 from Components.config import config, ConfigText, KEY_NUMBERS, KEY_ASCII, getKeyNumber
+from enigma import getPrevAsciiCode
 class ConfigHexNumber(ConfigText):
 	def __init__(self, default = "0000", size= 4):
 		try:
@@ -7,16 +8,16 @@ class ConfigHexNumber(ConfigText):
 			default="0"*size
 		ConfigText.__init__(self, default, fixed_size = False)
 		self.mapping = []
-		self.mapping.append (u"0") # 0
-		self.mapping.append (u"1") # 1
-		self.mapping.append (u"2ABC") # 2
-		self.mapping.append (u"3DEF") # 3
-		self.mapping.append (u"4") # 4
-		self.mapping.append (u"5") # 5
-		self.mapping.append (u"6") # 6
-		self.mapping.append (u"7") # 7
-		self.mapping.append (u"8") # 8
-		self.mapping.append (u"9") # 9
+		self.mapping.append ("0") # 0
+		self.mapping.append ("1") # 1
+		self.mapping.append ("2ABC") # 2
+		self.mapping.append ("3DEF") # 3
+		self.mapping.append ("4") # 4
+		self.mapping.append ("5") # 5
+		self.mapping.append ("6") # 6
+		self.mapping.append ("7") # 7
+		self.mapping.append ("8") # 8
+		self.mapping.append ("9") # 9
 		
 		self.size = size
 	
@@ -30,14 +31,14 @@ class ConfigHexNumber(ConfigText):
 	_value = property(getValue, setValue)
 
 	def conform(self):
-		print self.text
+		print(self.text)
 		self.text = self.text[-self.size:].zfill(self.size)
-		print self.text
+		print(self.text)
 		if self.marked_pos >= self.size:
 			self.marked_pos = self.size-1
 		pos = len(self.text) - self.marked_pos
-		print pos
-		print self.marked_pos
+		print(pos)
+		print(self.marked_pos)
 		if pos > len(self.text):
 			self.marked_pos = 0
 		else:
@@ -47,10 +48,10 @@ class ConfigHexNumber(ConfigText):
 		if key in KEY_NUMBERS or key == KEY_ASCII:
 			if key == KEY_ASCII:
 				owr = False
-				ascii = getPrevAsciiCode()
-				if not (48 <= ascii <= 57) or not(65 <= ascii <= 70) or not(97 <= ascii <= 102):
+				ascii_code = getPrevAsciiCode()
+				if not ((48 <= ascii_code <= 57) or (65 <= ascii_code <= 70) or (97 <= ascii_code <= 102)):
 					return
-	  			newChar = unichr(ascii)
+				newChar = chr(ascii_code)
 			else:
 				owr = self.lastKey == getKeyNumber(key)
 				newChar = self.getKey(getKeyNumber(key))
