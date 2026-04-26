@@ -94,7 +94,8 @@ class Lamedb:
 			if collect:
 				tmp = lamedb[x].split(":")
 				if len(tmp) >= 4:
-					if tmp[1]+tmp[2]+tmp[3] in self.database:
+					transponder_key = (tmp[1] + tmp[2] + tmp[3]).lower()
+					if transponder_key in self.database:
 						tmp = lamedb[x+2].split(",")
 						for key in tmp:
 							key = key.split(":")
@@ -150,7 +151,7 @@ class Lamedb:
 #				print "hmm, da stimmt was mit den Daten nicht:",raw
 #				break
 		else:
-			uniqueTransponder = service["namespace"]+service["tsid"]+service["onid"]
+			uniqueTransponder = (service["namespace"] + service["tsid"] + service["onid"]).lower()
 			if (int(service.get("flags","0"),16) & dxNoDVB):
 				tmp = ''
 				for cacheID in service.get("cacheIDs",[]):
@@ -268,8 +269,9 @@ class Lamedb:
 				if pos != int(tp.get("position")):
 					print("Namespace %s und Position %s sind  nicht identisch"% (tp.get("namespace"), tp.get("position")))
 					continue
-				self.database[tp["namespace"]+tp["tsid"]+tp["onid"]] = tp
-				self.database[tp["namespace"]+tp["tsid"]+tp["onid"]]["services"] = {}
+				transponder_key = (tp["namespace"] + tp["tsid"] + tp["onid"]).lower()
+				self.database[transponder_key] = tp
+				self.database[transponder_key]["services"] = {}
 				self.databaseState=1
 			elif freq[0] == "c" or freq[0] == "C":
 				if len(x[1]) > len(t2_c):
@@ -279,8 +281,9 @@ class Lamedb:
 					tp.update({t1[y]:x[0][y]})
 				for y in range(len(x[1])):
 					tp.update({t2_c[y]:x[1][y]})
-				self.database[tp["namespace"]+tp["tsid"]+tp["onid"]] = tp
-				self.database[tp["namespace"]+tp["tsid"]+tp["onid"]]["services"] = {}
+				transponder_key = (tp["namespace"] + tp["tsid"] + tp["onid"]).lower()
+				self.database[transponder_key] = tp
+				self.database[transponder_key]["services"] = {}
 				self.databaseState=1
 			elif freq[0] == "t" or freq[0] == "T":
 				if len(x[1]) > len(t2_t):
@@ -290,8 +293,9 @@ class Lamedb:
 					tp.update({t1[y]:x[0][y]})
 				for y in range(len(x[1])):
 					tp.update({t2_t[y]:x[1][y]})
-				self.database[tp["namespace"]+tp["tsid"]+tp["onid"]] = tp
-				self.database[tp["namespace"]+tp["tsid"]+tp["onid"]]["services"] = {}
+				transponder_key = (tp["namespace"] + tp["tsid"] + tp["onid"]).lower()
+				self.database[transponder_key] = tp
+				self.database[transponder_key]["services"] = {}
 				self.databaseState=1
 		else:
 			self.databaseState=2
