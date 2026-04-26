@@ -36,7 +36,7 @@ import time
 
 class ServiceList(MenuList):
 	def __init__(self):
-		MenuList.__init__(self, [], content = eListboxPythonMultiContent)
+		MenuList.__init__(self, [], None, eListboxPythonMultiContent)
 		self.l.setItemHeight(24);
 		self.l.setFont(0, gFont("Regular", 20))
 		path_raw = __file__.split("/")
