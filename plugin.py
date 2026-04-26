@@ -1039,7 +1039,7 @@ class ServicesEditor(Screen):
 				self.typesort = False
 			else:
 				self.typesort = True
-		for idx in xrange(len(self.newServiceList)):
+		for idx in range(len(self.newServiceList)):
 			if self.newServiceList[idx][0] == self.usk:
 				self["list"].instance.moveSelectionTo(idx)
 				break

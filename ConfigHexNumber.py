@@ -7,6 +7,7 @@ class ConfigHexNumber(ConfigText):
 		except:
 			default="0"*size
 		ConfigText.__init__(self, default, fixed_size = False)
+		self.last_value = self.value
 		self.mapping = []
 		self.mapping.append ("0") # 0
 		self.mapping.append ("1") # 1
@@ -66,6 +67,7 @@ class ConfigHexNumber(ConfigText):
 
 	def onSelect(self, session):
 		self.allmarked = (self.value != "")
+		self.last_value = self.value
 
 	def onDeselect(self, session):
 		self.marked_pos = 0
