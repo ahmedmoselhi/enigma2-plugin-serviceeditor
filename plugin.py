@@ -161,10 +161,10 @@ class ServiceEditor(Screen,ConfigListScreen):
 		<ePixmap pixmap="skin_default/buttons/green.png" position="280,0" size="280,80" alphatest="on" />
 		<ePixmap pixmap="skin_default/buttons/yellow.png" position="560,0" size="280,80" alphatest="on" />
 		<ePixmap pixmap="skin_default/buttons/blue.png" position="840,0" size="280,80" alphatest="on" />
-		<widget name="key_red" position="0,0" zPosition="1" size="280,80" font="Regular;40" halign="center" valign="center" backgroundColor="#9f1313" transparent="1" />
-		<widget name="key_green" position="280,0" zPosition="1" size="280,80" font="Regular;40" halign="center" valign="center" backgroundColor="#1f771f" transparent="1" />
-		<widget name="key_yellow" position="560,0" zPosition="1" size="280,80" font="Regular;40" halign="center" valign="center" backgroundColor="#a08500" transparent="1" />
-		<widget name="key_blue" position="840,0" zPosition="1" size="280,80" font="Regular;40" halign="center" valign="center" backgroundColor="#18188b" transparent="1" />
+		<widget name="key_red" position="0,0" zPosition="1" size="280,80" font="Regular;32" halign="center" valign="center" backgroundColor="#9f1313" transparent="1" />
+		<widget name="key_green" position="280,0" zPosition="1" size="280,80" font="Regular;32" halign="center" valign="center" backgroundColor="#1f771f" transparent="1" />
+		<widget name="key_yellow" position="560,0" zPosition="1" size="280,80" font="Regular;32" halign="center" valign="center" backgroundColor="#a08500" transparent="1" />
+		<widget name="key_blue" position="840,0" zPosition="1" size="280,80" font="Regular;32" halign="center" valign="center" backgroundColor="#18188b" transparent="1" />
 		<widget name="config" position="20,100" size="1080,750" scrollbarMode="showOnDemand" />
 		</screen>"""
 	def __init__(self, session, service = None):
@@ -374,9 +374,7 @@ class Laufschrift(HTMLComponent, GUIComponent):
 			path += (path_raw[x] + "/")
 		self.type_pixmap = LoadPixmap(path + 'type.png')
 		self.myTimer = eTimer()
-		self.myTimer.callback.append(self.laufschrift)
-		self.myTimer.start(60)
-		self.offset = 48
+		self.offset = 0
 		self.mylist = None
 	
 	GUI_WIDGET = eListbox
@@ -385,23 +383,13 @@ class Laufschrift(HTMLComponent, GUIComponent):
 		instance.setContent(self.l)
 
 	def laufschrift(self):
-		if self.mylist is None:
-			return
-		self.offset=-((abs(self.offset)+1)%85)
-		self.mylist[1][1]=self.offset
-		tmp = []
-		for x in self.mylist:
-			if x is not None and len(x)>1:
-				tmp.append(tuple(x))
-			else:
-				tmp.append(x)
-		self.l.setList([tmp])
+		return
 	
 	def setEntry(self):
 		res = [None]
 		res.append(MultiContentEntryPixmapAlphaTest(
 			pos = (0, 0),
-			size = (134,48),
+			size = (48,48),
 			png = self.type_pixmap,))
 		tmp = []
 		for x in res:
@@ -495,10 +483,10 @@ class ServicesEditor(Screen):
 		<ePixmap pixmap="skin_default/buttons/green.png" position="280,0" size="280,80" alphatest="on" />
 		<ePixmap pixmap="skin_default/buttons/yellow.png" position="560,0" size="280,80" alphatest="on" />
 		<ePixmap pixmap="skin_default/buttons/blue.png" position="840,0" size="280,80" alphatest="on" />
-		<widget name="key_red" position="0,0" zPosition="1" size="280,80" font="Regular;40" halign="center" valign="center" backgroundColor="#9f1313" transparent="1" />
-		<widget name="key_green" position="280,0" zPosition="1" size="280,80" font="Regular;40" halign="center" valign="center" backgroundColor="#1f771f" transparent="1" />
-		<widget name="key_yellow" position="560,0" zPosition="1" size="280,80" font="Regular;40" halign="center" valign="center" backgroundColor="#a08500" transparent="1" />
-		<widget name="key_blue" position="840,0" zPosition="1" size="280,80" font="Regular;40" halign="center" valign="center" backgroundColor="#18188b" transparent="1" />
+		<widget name="key_red" position="0,0" zPosition="1" size="280,80" font="Regular;32" halign="center" valign="center" backgroundColor="#9f1313" transparent="1" />
+		<widget name="key_green" position="280,0" zPosition="1" size="280,80" font="Regular;32" halign="center" valign="center" backgroundColor="#1f771f" transparent="1" />
+		<widget name="key_yellow" position="560,0" zPosition="1" size="280,80" font="Regular;32" halign="center" valign="center" backgroundColor="#a08500" transparent="1" />
+		<widget name="key_blue" position="840,0" zPosition="1" size="280,80" font="Regular;32" halign="center" valign="center" backgroundColor="#18188b" transparent="1" />
 		<widget name="laufschrift" position="0,80" size="48,48" scrollbarMode="showNever" />
 		<widget name="head" position="48,80" size="1072,48" scrollbarMode="showNever" />
 		<widget name="list" position="0,128" size="1120,480" scrollbarMode="showOnDemand" />
