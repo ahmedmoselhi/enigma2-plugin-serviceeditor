@@ -45,11 +45,19 @@ class Lamedb:
 			elif tp["namespace"][:4].lower()=="eeee":
 				puffer.append(("\tt %s:%s:%s:%s:%s:%s:%s:%s:%s:%s\n")%(tp["frequency"],tp["bandwidth"],tp["code_rate_HP"],tp["code_rate_LP"],tp["modulation"],tp["transmission_mode"],tp["guard_interval"],tp["hierarchy"],tp["inversion"],tp["flags"]))
 			else:
-				sys = tp.get("system",None)
-				if sys is None or sys == "0":
-					puffer.append(("\ts %s:%s:%s:%s:%s:%s:%s\n")%(tp["frequency"],tp["symbol_rate"],tp["polarization"],tp["fec_inner"],tp["position"],tp["inversion"],tp["flags"]))
-				else:
-					puffer.append(("\ts %s:%s:%s:%s:%s:%s:%s:%s:%s:%s:%s\n")%(tp["frequency"],tp["symbol_rate"],tp["polarization"],tp["fec_inner"],tp["position"],tp["inversion"],tp["flags"],tp["system"],tp["modulation"],tp["rolloff"],tp["pilot"]))
+				s_params = [
+					tp["frequency"], tp["symbol_rate"], tp["polarization"], tp["fec_inner"],
+					tp["position"], tp["inversion"], tp.get("flags", "0")
+				]
+				if "system" in tp:
+					s_params.extend([
+						tp.get("system", "0"),
+						tp.get("modulation", "1"),
+						tp.get("rolloff", "0"),
+						tp.get("pilot", "0"),
+					])
+				s_params.extend(tp.get("extra_sat_params", []))
+				puffer.append(("\ts %s\n") % ":".join(s_params))
 			puffer.append("/\n")	
 		puffer.append("end\n")
 		puffer.append("services\n")
@@ -72,7 +80,7 @@ class Lamedb:
 					tmp += ",f:" + flags
 				puffer.append(("p:%s%s\n")%(service["provider"],tmp))
 		puffer.append("end\n")
-		puffer.append("Have a lot of girls\n")
+		puffer.append("Have a lot of bugs!\n")
 		f = open("/etc/enigma2/lamedb","w")
 		f.writelines(puffer)
 		f.close()
@@ -253,16 +261,15 @@ class Lamedb:
 			tp = {"services":[]}
 			x[1][0] = freq[1]
 			if freq[0] == "s" or freq[0] == "S":
-				if ((self.version == 3) and len(x[1]) > len(t2_sv3)) or ((self.version == 4) and len(x[1]) > len(t2_sv4)):
-					print("zu viele Parameter (t2) in ",x[1])
-					continue
 				for y in range(len(x[0])):
 					tp.update({t1[y]:x[0][y]})
-				for y in range(len(x[1])):
-					if self.version == 3:	
+				for y in range(min(len(x[1]), len(t2_sv4 if self.version == 4 else t2_sv3))):
+					if self.version == 3:
 						tp.update({t2_sv3[y]:x[1][y]})
 					elif self.version == 4:
 						tp.update({t2_sv4[y]:x[1][y]})
+				if self.version == 4 and len(x[1]) > len(t2_sv4):
+					tp["extra_sat_params"] = x[1][len(t2_sv4):]
 				pos = int(tp.get("namespace"),16) >>16
 				if pos > 1799:
 					pos -= 3600
