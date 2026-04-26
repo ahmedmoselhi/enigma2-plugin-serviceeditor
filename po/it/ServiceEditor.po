@@ -1,0 +1,203 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: enigma2 - serviceeditor\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2009-04-17 19:22+0200\n"
+"PO-Revision-Date: 2009-04-17 22:58+0100\n"
+"Last-Translator: Spaeleus <spaeleus@croci.org>\n"
+"Language-Team: www.linsat.net <spaeleus@croci.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Poedit-Language: Italian\n"
+"X-Poedit-Country: ITALY\n"
+"X-Poedit-SourceCharset: iso-8859-1\n"
+"X-Poedit-Basepath: /home/dario/Plugins/ServiceEditor\n"
+"X-Poedit-SearchPath-0: /home/dario/Plugins/ServiceEditor\n"
+
+#: plugin.py:53
+msgid "E"
+msgstr "E"
+
+#: plugin.py:54
+msgid "W"
+msgstr "O"
+
+#: plugin.py:55
+msgid "DVB-C"
+msgstr "DVB-C"
+
+#: plugin.py:56
+msgid "DVB-T"
+msgstr "DVB-T"
+
+#: plugin.py:122
+msgid "Error"
+msgstr "Errore"
+
+#: plugin.py:231
+msgid "ok"
+msgstr "Ok"
+
+#: plugin.py:268
+msgid "Name"
+msgstr "Nome"
+
+#: plugin.py:269
+#: plugin.py:1075
+msgid "Provider"
+msgstr "Provider"
+
+#: plugin.py:270
+msgid "SID (hex)"
+msgstr "SID (hex)"
+
+#: plugin.py:271
+msgid "PCR PID (hex)"
+msgstr "PID PCR (hex)"
+
+#: plugin.py:272
+msgid "Video PID (hex)"
+msgstr "PID video (hex)"
+
+#: plugin.py:273
+msgid "Video Type"
+msgstr "Tipo video"
+
+#: plugin.py:274
+msgid "Audio PID (hex)"
+msgstr "PID audio (hex)"
+
+#: plugin.py:275
+msgid "AC3 PID (hex)"
+msgstr "PID AC3 (hex)"
+
+#: plugin.py:276
+msgid "Audiochannel"
+msgstr "Canale audio"
+
+#: plugin.py:278
+msgid "AC3 Delay (ms)"
+msgstr "Ritardo AC3 (ms)"
+
+#: plugin.py:279
+msgid "PCM Delay (ms)"
+msgstr "Ritardo PCM (ms)"
+
+#: plugin.py:281
+msgid "TXT PID (hex)"
+msgstr "PID TXT (hex)"
+
+#: plugin.py:282
+msgid "Subtitle PID (hex)"
+msgstr "PID sottotitoli (hex)"
+
+#: plugin.py:283
+msgid "dont use SDT"
+msgstr "Non utilizzare SDT"
+
+#: plugin.py:284
+msgid "hide Service"
+msgstr "Nascondere il canale"
+
+#: plugin.py:285
+msgid "no standart service"
+msgstr "Canale non standard"
+
+#: plugin.py:286
+msgid "keep Servicename"
+msgstr "Mantenere nome canale"
+
+#: plugin.py:287
+msgid "sign as new Service"
+msgstr "Marcare come nuovo canale"
+
+#: plugin.py:456
+#, python-format
+msgid "unhide Service %s"
+msgstr "Mostrare il canale %s"
+
+#: plugin.py:458
+#, python-format
+msgid "hide Service %s"
+msgstr "Nascondere il canale %s"
+
+#: plugin.py:459
+#, python-format
+msgid "hide Provider %s"
+msgstr "Nascondere il provider %s"
+
+#: plugin.py:460
+#, python-format
+msgid "unhide Provider %s"
+msgstr "Mostrare il provider %s"
+
+#: plugin.py:461
+#, python-format
+msgid "toggle hide attibutes for %s"
+msgstr "Mostrare <-> Nascondere %s"
+
+#: plugin.py:473
+msgid "Options for hide"
+msgstr "Opzioni per nascondere"
+
+#: plugin.py:540
+msgid "hide/unhide"
+msgstr "Nasc./Mostr."
+
+#: plugin.py:541
+msgid "edit"
+msgstr "Modificare"
+
+#: plugin.py:543
+msgid "sort"
+msgstr "Ord."
+
+#: plugin.py:559
+msgid "Services"
+msgstr "Canali"
+
+#: plugin.py:560
+msgid "Providers"
+msgstr "Provider"
+
+#: plugin.py:561
+msgid "Pos"
+msgstr "Pos"
+
+#: plugin.py:1065
+msgid "Service"
+msgstr "Canale"
+
+#: plugin.py:1083
+#: plugin.py:1091
+#: plugin.py:1100
+msgid ""
+"Frequency\n"
+"MHz"
+msgstr ""
+"Frequenza\n"
+"MHz"
+
+#: plugin.py:1176
+#: plugin.py:1181
+msgid "Services Editor"
+msgstr "Editor Canali"
+
+#, fuzzy
+#~ msgid "hide all Services from %s"
+#~ msgstr "Nascondere il canale"
+
+#, fuzzy
+#~ msgid "unhide all Services from %s"
+#~ msgstr "Nascondere il canale"
+
+#, fuzzy
+#~ msgid "new service"
+#~ msgstr "Nascondere il canale"
+
+#, fuzzy
+#~ msgid "new provider"
+#~ msgstr "Provider"
+

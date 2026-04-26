@@ -1,0 +1,188 @@
+# translation of plugin.po to Deutsch
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+#
+# adenin <adenin@i-have-a-dreambox.com>, 2009.
+msgid ""
+msgstr ""
+"Project-Id-Version: plugin\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2009-04-17 19:22+0200\n"
+"PO-Revision-Date: 2009-04-18 12:59+0100\n"
+"Last-Translator: Titovich\n"
+"Language-Team: Deutsch\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: KBabel 1.11.4\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+#: plugin.py:53
+msgid "E"
+msgstr "E"
+
+#: plugin.py:54
+msgid "W"
+msgstr "O"
+
+#: plugin.py:55
+msgid "DVB-C"
+msgstr "DVB-C"
+
+#: plugin.py:56
+msgid "DVB-T"
+msgstr "DVB-T"
+
+#: plugin.py:122
+msgid "Error"
+msgstr "Error"
+
+#: plugin.py:231
+msgid "ok"
+msgstr "ok"
+
+#: plugin.py:268
+msgid "Name"
+msgstr "Nombre"
+
+#: plugin.py:269
+#: plugin.py:1075
+msgid "Provider"
+msgstr "Proveedor"
+
+#: plugin.py:270
+msgid "SID (hex)"
+msgstr "SID (hex)"
+
+#: plugin.py:271
+msgid "PCR PID (hex)"
+msgstr "PID de PCR (hex)"
+
+#: plugin.py:272
+msgid "Video PID (hex)"
+msgstr "PID de Video (hex)"
+
+#: plugin.py:273
+msgid "Video Type"
+msgstr "Tipo de Video"
+
+#: plugin.py:274
+msgid "Audio PID (hex)"
+msgstr "PID de Audio (hex)"
+
+#: plugin.py:275
+msgid "AC3 PID (hex)"
+msgstr "PID AC3 (hex)"
+
+#: plugin.py:276
+msgid "Audiochannel"
+msgstr "Canal de Audio"
+
+#: plugin.py:278
+msgid "AC3 Delay (ms)"
+msgstr "Retardo AC3 (ms)"
+
+#: plugin.py:279
+msgid "PCM Delay (ms)"
+msgstr "Retardo PCM (ms)"
+
+#: plugin.py:281
+msgid "TXT PID (hex)"
+msgstr "TXT PID (hex)"
+
+#: plugin.py:282
+msgid "Subtitle PID (hex)"
+msgstr "PID de Subtítulos (hex)"
+
+#: plugin.py:283
+msgid "dont use SDT"
+msgstr "No usar SDT"
+
+#: plugin.py:284
+msgid "hide Service"
+msgstr "Ocultar Canal"
+
+#: plugin.py:285
+msgid "no standart service"
+msgstr "No hay canal estándar"
+
+#: plugin.py:286
+msgid "keep Servicename"
+msgstr "Mantener Nombre de Canal"
+
+#: plugin.py:287
+msgid "sign as new Service"
+msgstr "marcar como \"nuevo Canal\""
+
+#: plugin.py:456
+#, python-format
+msgid "unhide Service %s"
+msgstr "mostrar Canal %s"
+
+#: plugin.py:458
+#, python-format
+msgid "hide Service %s"
+msgstr "ocultar Canal %s"
+
+#: plugin.py:459
+#, python-format
+msgid "hide Provider %s"
+msgstr "ocultar Proveedor %s"
+
+#: plugin.py:460
+#, python-format
+msgid "unhide Provider %s"
+msgstr "mostrar Proveedor %s"
+
+#: plugin.py:461
+#, python-format
+msgid "toggle hide attibutes for %s"
+msgstr "alternar ocultar atributos para %s"
+
+#: plugin.py:473
+msgid "Options for hide"
+msgstr "Opciones para ocultar"
+
+#: plugin.py:540
+msgid "hide/unhide"
+msgstr "ocultar/mostrar"
+
+#: plugin.py:541
+msgid "edit"
+msgstr "editar"
+
+#: plugin.py:543
+msgid "sort"
+msgstr "aleatorio"
+
+#: plugin.py:559
+msgid "Services"
+msgstr "Canales"
+
+#: plugin.py:560
+msgid "Providers"
+msgstr "Proveedores"
+
+#: plugin.py:561
+msgid "Pos"
+msgstr "Pos."
+
+#: plugin.py:1065
+msgid "Service"
+msgstr "Canal"
+
+#: plugin.py:1083
+#: plugin.py:1091
+#: plugin.py:1100
+msgid ""
+"Frequency\n"
+"MHz"
+msgstr ""
+"Frecuencia\n"
+"MHz"
+
+#: plugin.py:1176
+#: plugin.py:1181
+msgid "Services Editor"
+msgstr "Rditor de Canales"
+
