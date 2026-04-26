@@ -604,6 +604,7 @@ class ServicesEditor(Screen):
 		for x in range(len(self.row)):
 			head[x][2]= self.row[x][1]
 			if len(self.row[x])>3:		#TODO Graphik
+				pass
 		print("left")
 		print("right")
 		self["laufschrift"].setEntry()
@@ -646,7 +647,7 @@ class ServicesEditor(Screen):
 		pass
 		
 	def left(self):
-		print "left"
+		print ("left")
 		if self.currentSelectedColumn:
 			data = self["head"].l.getCurrentSelection()
 			if data is  None:
@@ -667,7 +668,7 @@ class ServicesEditor(Screen):
 			self["head"].l.setSelectionClip(eRect(0,0,0,0))
 
 	def right(self):
-		print "right"
+		print ("right")
 		if self.currentSelectedColumn < len(self.row):
 			data = self["head"].l.getCurrentSelection()
 			if data is  None:
@@ -1007,9 +1008,13 @@ class ServicesEditor(Screen):
 
 	def compareColumn(self, a):
 		for idx in range(len(self.newServiceList)):
-		print("openMenu")
-		print("showServiceInfo")
-		print("showHelp")
+			print("openMenu")
+			print("showServiceInfo")
+			print("showHelp")
+
+		if self.currentSelectedColumn:
+			if self.row[self.currentSelectedColumn-1][0] == "name":
+				return a[2][7].lower()
 			elif self.row[self.currentSelectedColumn-1][0] == "provider":
 				return a[3][7].lower()
 			elif self.row[self.currentSelectedColumn-1][0] == "position":
@@ -1053,7 +1058,7 @@ class ServicesEditor(Screen):
 		self.currentSelectedColumn = old
 
 	def openMenu(self):
-		print "openMenu"
+		print("openMenu")
 
 	def Exit(self):
 		if self.lamedb.databaseState == 5:
@@ -1067,10 +1072,10 @@ class ServicesEditor(Screen):
 		self.close()
 		
 	def showServiceInfo(self):
-		print "showServiceInfo"
+		print("showServiceInfo")
 	
 	def showHelp(self):
-		print "showHelp"
+		print("showHelp")
 		if self.cur_service is None:
 			return
 		self["infolist"].l.setFont(0, gFont("Regular", 11))
