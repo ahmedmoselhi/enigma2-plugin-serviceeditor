@@ -37,8 +37,8 @@ import time
 class ServiceList(MenuList):
 	def __init__(self):
 		MenuList.__init__(self, [], None, eListboxPythonMultiContent)
-		self.l.setItemHeight(24);
-		self.l.setFont(0, gFont("Regular", 20))
+		self.l.setItemHeight(48);
+		self.l.setFont(0, gFont("Regular", 40))
 		path_raw = __file__.split("/")
 		path = ""
 		for x in range(len(path_raw)-1):
@@ -84,7 +84,7 @@ class ServiceList(MenuList):
 		
 		serviceEntry.append(MultiContentEntryPixmapAlphaTest(
 					pos = (0, 0),
-					size = (24, 24),
+					size = (48, 48),
 					png = service_png,))
 #					backcolor = backColor,
 #					backcolor_sel = backColorSelected)
@@ -103,7 +103,7 @@ class ServiceList(MenuList):
 		serviceEntry.append(MultiContentEntryText(
 #					pos = (0,0),
 					pos = (calc_xpos(serviceEntry),0),
-					size = (276, 24),
+					size = (552, 48),
 					font = 0, flags = RT_HALIGN_LEFT | RT_VALIGN_TOP,
 					text = service['name'],
 #					color = 0x00AABBCC,
@@ -114,7 +114,7 @@ class ServiceList(MenuList):
 			
 		serviceEntry.append(MultiContentEntryText(
 					pos = (calc_xpos(serviceEntry),0),
-					size = (155, 24),
+					size = (310, 48),
 					font = 0, flags = RT_HALIGN_LEFT | RT_VALIGN_TOP,
 					text = service['provider'],
 #					color = 0x00AABBCC,
@@ -139,7 +139,7 @@ class ServiceList(MenuList):
 				pos = "0.0"
 		serviceEntry.append(MultiContentEntryText(
 					pos = (calc_xpos(serviceEntry),0),
-					size = (78, 24),
+					size = (156, 48),
 					font = 0, flags = RT_HALIGN_CENTER | RT_VALIGN_TOP,
 					text = pos,
 #					color = 0x00AABBCC,
@@ -156,16 +156,16 @@ class ServiceEditor(Screen,ConfigListScreen):
 #	dxNewFound=64
 	
 	skin = """
-		<screen position="90,95" size="560,430" title="Edit" >
-		<ePixmap pixmap="skin_default/buttons/red.png" position="0,0" size="140,40" alphatest="on" />
-		<ePixmap pixmap="skin_default/buttons/green.png" position="140,0" size="140,40" alphatest="on" />
-		<ePixmap pixmap="skin_default/buttons/yellow.png" position="280,0" size="140,40" alphatest="on" />
-		<ePixmap pixmap="skin_default/buttons/blue.png" position="420,0" size="140,40" alphatest="on" />
-		<widget name="key_red" position="0,0" zPosition="1" size="140,40" font="Regular;20" halign="center" valign="center" backgroundColor="#9f1313" transparent="1" />
-		<widget name="key_green" position="140,0" zPosition="1" size="140,40" font="Regular;20" halign="center" valign="center" backgroundColor="#1f771f" transparent="1" />
-		<widget name="key_yellow" position="280,0" zPosition="1" size="140,40" font="Regular;20" halign="center" valign="center" backgroundColor="#a08500" transparent="1" />
-		<widget name="key_blue" position="420,0" zPosition="1" size="140,40" font="Regular;20" halign="center" valign="center" backgroundColor="#18188b" transparent="1" />
-		<widget name="config" position="10,50" size="540,375" scrollbarMode="showOnDemand" />
+		<screen position="400,110" size="1120,860" title="Edit" >
+		<ePixmap pixmap="skin_default/buttons/red.png" position="0,0" size="280,80" alphatest="on" />
+		<ePixmap pixmap="skin_default/buttons/green.png" position="280,0" size="280,80" alphatest="on" />
+		<ePixmap pixmap="skin_default/buttons/yellow.png" position="560,0" size="280,80" alphatest="on" />
+		<ePixmap pixmap="skin_default/buttons/blue.png" position="840,0" size="280,80" alphatest="on" />
+		<widget name="key_red" position="-4,-2" zPosition="1" size="280,80" font="Regular;32" halign="center" valign="center" backgroundColor="#9f1313" transparent="1" />
+		<widget name="key_green" position="276,-2" zPosition="1" size="280,80" font="Regular;32" halign="center" valign="center" backgroundColor="#1f771f" transparent="1" />
+		<widget name="key_yellow" position="556,-2" zPosition="1" size="280,80" font="Regular;32" halign="center" valign="center" backgroundColor="#a08500" transparent="1" />
+		<widget name="key_blue" position="836,-2" zPosition="1" size="280,80" font="Regular;32" halign="center" valign="center" backgroundColor="#18188b" transparent="1" />
+		<widget name="config" position="20,100" size="1080,750" scrollbarMode="showOnDemand" />
 		</screen>"""
 	def __init__(self, session, service = None):
 		self.skin = ServiceEditor.skin
@@ -366,17 +366,15 @@ class Laufschrift(HTMLComponent, GUIComponent):
 		GUIComponent.__init__(self)
 		self.l = eListboxPythonMultiContent()
 		self.l.setSelectionClip(eRect(0,0,0,0))
-		self.l.setItemHeight(24);
-		self.l.setFont(0, gFont("Regular", 20))
+		self.l.setItemHeight(48);
+		self.l.setFont(0, gFont("Regular", 40))
 		path_raw = __file__.split("/")
 		path = ""
 		for x in range(len(path_raw)-1):
 			path += (path_raw[x] + "/")
 		self.type_pixmap = LoadPixmap(path + 'type.png')
 		self.myTimer = eTimer()
-		self.myTimer.callback.append(self.laufschrift)
-		self.myTimer.start(60)
-		self.offset = 24
+		self.offset = 0
 		self.mylist = None
 	
 	GUI_WIDGET = eListbox
@@ -385,23 +383,13 @@ class Laufschrift(HTMLComponent, GUIComponent):
 		instance.setContent(self.l)
 
 	def laufschrift(self):
-		if self.mylist is None:
-			return
-		self.offset=-((abs(self.offset)+1)%43)
-		self.mylist[1][1]=self.offset
-		tmp = []
-		for x in self.mylist:
-			if x is not None and len(x)>1:
-				tmp.append(tuple(x))
-			else:
-				tmp.append(x)
-		self.l.setList([tmp])
+		return
 	
 	def setEntry(self):
 		res = [None]
 		res.append(MultiContentEntryPixmapAlphaTest(
 			pos = (0, 0),
-			size = (67,24),
+			size = (48,48),
 			png = self.type_pixmap,))
 		tmp = []
 		for x in res:
@@ -421,8 +409,8 @@ class Head(HTMLComponent, GUIComponent):
 		GUIComponent.__init__(self)
 		self.l = eListboxPythonMultiContent()
 		self.l.setSelectionClip(eRect(0,0,0,0))
-		self.l.setItemHeight(24);
-		self.l.setFont(0, gFont("Regular", 20))
+		self.l.setItemHeight(48);
+		self.l.setFont(0, gFont("Regular", 40))
 	GUI_WIDGET = eListbox
 
 	def postWidgetCreate(self, instance):
@@ -435,7 +423,7 @@ class Head(HTMLComponent, GUIComponent):
 		for x in data:
 			res.append(MultiContentEntryText(
 				pos = (x[0],0),
-				size = (x[1], 24),
+				size = (x[1], 48),
 				font = 0, flags = RT_HALIGN_CENTER | RT_VALIGN_TOP,
 				text = x[2],
 				color = 0x00C0C0C0,
@@ -448,8 +436,8 @@ class Head(HTMLComponent, GUIComponent):
 
 class ServiceHideMenuSelection(Screen):
 	skin = """
-		<screen position="90,165" size="500,130" title="">
-			<widget name="menulist" position="20,10" size="460,100" />
+		<screen position="460,410" size="1000,260" title="">
+			<widget name="menulist" position="40,20" size="920,200" />
 		</screen>"""
 		
 	def __init__(self, session, service = None):
@@ -490,19 +478,19 @@ class ServicesEditor(Screen):
 
 	version = "(20090418-alpha)"
 	skin = """
-		<screen position="90,95" size="560,430" title="reading lamedb - please wait" >
-		<ePixmap pixmap="skin_default/buttons/red.png" position="0,0" size="140,40" alphatest="on" />
-		<ePixmap pixmap="skin_default/buttons/green.png" position="140,0" size="140,40" alphatest="on" />
-		<ePixmap pixmap="skin_default/buttons/yellow.png" position="280,0" size="140,40" alphatest="on" />
-		<ePixmap pixmap="skin_default/buttons/blue.png" position="420,0" size="140,40" alphatest="on" />
-		<widget name="key_red" position="0,0" zPosition="1" size="140,40" font="Regular;20" halign="center" valign="center" backgroundColor="#9f1313" transparent="1" />
-		<widget name="key_green" position="140,0" zPosition="1" size="140,40" font="Regular;20" halign="center" valign="center" backgroundColor="#1f771f" transparent="1" />
-		<widget name="key_yellow" position="280,0" zPosition="1" size="140,40" font="Regular;20" halign="center" valign="center" backgroundColor="#a08500" transparent="1" />
-		<widget name="key_blue" position="420,0" zPosition="1" size="140,40" font="Regular;20" halign="center" valign="center" backgroundColor="#18188b" transparent="1" />
-		<widget name="laufschrift" position="0,40" size="24,24" scrollbarMode="showNever" />
-		<widget name="head" position="24,40" size="536,24" scrollbarMode="showNever" />
-		<widget name="list" position="0,64" size="560,240" scrollbarMode="showOnDemand" />
-		<widget name="infolist" position="0,334" size="560,96" />
+		<screen position="400,110" size="1120,860" title="reading lamedb - please wait" >
+		<ePixmap pixmap="skin_default/buttons/red.png" position="0,0" size="280,80" alphatest="on" />
+		<ePixmap pixmap="skin_default/buttons/green.png" position="280,0" size="280,80" alphatest="on" />
+		<ePixmap pixmap="skin_default/buttons/yellow.png" position="560,0" size="280,80" alphatest="on" />
+		<ePixmap pixmap="skin_default/buttons/blue.png" position="840,0" size="280,80" alphatest="on" />
+		<widget name="key_red" position="-4,-2" zPosition="1" size="280,80" font="Regular;32" halign="center" valign="center" backgroundColor="#9f1313" transparent="1" />
+		<widget name="key_green" position="276,-2" zPosition="1" size="280,80" font="Regular;32" halign="center" valign="center" backgroundColor="#1f771f" transparent="1" />
+		<widget name="key_yellow" position="556,-2" zPosition="1" size="280,80" font="Regular;32" halign="center" valign="center" backgroundColor="#a08500" transparent="1" />
+		<widget name="key_blue" position="836,-2" zPosition="1" size="280,80" font="Regular;32" halign="center" valign="center" backgroundColor="#18188b" transparent="1" />
+		<widget name="laufschrift" position="0,80" size="48,48" scrollbarMode="showNever" />
+		<widget name="head" position="48,80" size="1072,48" scrollbarMode="showNever" />
+		<widget name="list" position="0,128" size="1120,480" scrollbarMode="showOnDemand" />
+		<widget name="infolist" position="0,668" size="1120,192" />
 		</screen>"""
 	def __init__(self, session):
 		self.skin = ServicesEditor.skin
@@ -551,8 +539,8 @@ class ServicesEditor(Screen):
 		self["infolist"] = MenuList([])
 		self["infolist"].l = eListboxPythonMultiContent()
 		self["infolist"].l.setSelectionClip(eRect(0,0,0,0))
-		self["infolist"].l.setItemHeight(24);
-		self["infolist"].l.setFont(0, gFont("Regular", 20))
+		self["infolist"].l.setItemHeight(48);
+		self["infolist"].l.setFont(0, gFont("Regular", 40))
 		
 		self["laufschrift"] = Laufschrift()
 		self["head"] = Head()
@@ -776,7 +764,7 @@ class ServicesEditor(Screen):
 			}
 
 		print("getInfo")
-		self["infolist"].l.setFont(0, gFont("Regular", 20))
+		self["infolist"].l.setFont(0, gFont("Regular", 40))
 		utk = self.usk[:16]
 		name = self.cur_service["name"]
 		provider = self.cur_service["provider"]
@@ -789,11 +777,11 @@ class ServicesEditor(Screen):
 				fec = tp.get("fec_inner","0")
 				mod = tp.get("modulation","0")
 				info3 = (
-					(100, freq[:-3]+"."+freq[-3:]),
-					(60, sym[:-3]),
-					(50, transFec.get(fec,"?")),
-					(80, transModulationCable.get(mod,"?")),
-					(55, self.cur_service.get("type","?")),
+					(200, freq[:-3]+"."+freq[-3:]),
+					(120, sym[:-3]),
+					(100, transFec.get(fec,"?")),
+					(160, transModulationCable.get(mod,"?")),
+					(110, self.cur_service.get("type","?")),
 				)
 			elif self.usk[:4].lower()=="eeee":
 				bw = tp["bandwidth"]
@@ -801,11 +789,11 @@ class ServicesEditor(Screen):
 				fecLP = tp["code_rate_LP"]
 				mod = tp["modulation"]
 				info3 = (
-					(100, freq[:-6]+"."+freq[-6:-3]),
-					(50, transBandwidth.get(bw,"?")),
-					(50, transFecTerr.get(fecHP,"?")),
-					(50, transFecTerr.get(fecLP,"?")),
-					(80, transModulationTerr.get(mod,"?")),
+					(200, freq[:-6]+"."+freq[-6:-3]),
+					(100, transBandwidth.get(bw,"?")),
+					(100, transFecTerr.get(fecHP,"?")),
+					(100, transFecTerr.get(fecLP,"?")),
+					(160, transModulationTerr.get(mod,"?")),
 				)
 			else:
 				sys = tp.get("system",None)
@@ -819,12 +807,12 @@ class ServicesEditor(Screen):
 				sym = tp["symbol_rate"]
 				fec = tp.get("fec_inner","0")
 				info3 = (		
-					(100, freq[:-3]+"."+freq[-3:]),
-					(15, transPol.get(pol,"?")),
-					(60, sym[:-3]),
-					(50, transFec.get(fec,"?")),
-					(55, transModulation.get(mod,"?")),
-					(55, self.cur_service.get("type","?")),
+					(200, freq[:-3]+"."+freq[-3:]),
+					(30, transPol.get(pol,"?")),
+					(120, sym[:-3]),
+					(100, transFec.get(fec,"?")),
+					(110, transModulation.get(mod,"?")),
+					(110, self.cur_service.get("type","?")),
 					)
 
 		calc_xpos = lambda a:a[len(a)-1][1]+a[len(a)-1][3]	# vom letzten Entry addieren wir x_pos und x_size und erhalten x_pos des neu Entry
@@ -833,7 +821,7 @@ class ServicesEditor(Screen):
 		entry = [None]
 		entry.append(MultiContentEntryText(
 			pos = (0,0),
-			size = (560, 24),
+			size = (1120, 48),
 			font = 0, flags = RT_HALIGN_CENTER | RT_VALIGN_TOP,
 			text = name,
 			border_width = 1,
@@ -843,7 +831,7 @@ class ServicesEditor(Screen):
 		entry = [None]
 		entry.append(MultiContentEntryText(
 			pos = (0,0),
-			size = (560, 24),
+			size = (1120, 48),
 			font = 0, flags = RT_HALIGN_CENTER | RT_VALIGN_TOP,
 			text = provider,
 			border_width = 1,
@@ -855,7 +843,7 @@ class ServicesEditor(Screen):
 			if len(entry)==1:
 				entry.append(MultiContentEntryText(
 					pos = (0,0),
-					size = (i[0], 24),
+					size = (i[0], 48),
 					font = 0, flags = RT_HALIGN_CENTER | RT_VALIGN_TOP,
 					text = i[1],
 					border_width = 1,
@@ -863,7 +851,7 @@ class ServicesEditor(Screen):
 			else:
 				entry.append(MultiContentEntryText(
 					pos = (calc_xpos(entry),0),
-					size = (i[0], 24),
+					size = (i[0], 48),
 					font = 0, flags = RT_HALIGN_CENTER | RT_VALIGN_TOP,
 					text = i[1],
 					border_width = 1,
@@ -908,16 +896,16 @@ class ServicesEditor(Screen):
 					vtype = pid
 					
 		info4 = (
-			(50, vpid),
-			(50, vtype),
-			(50, apid),
-			(50, tpid),
-			(50, spid),
-			(50, pcrpid),
-			(50, ac3pid),
-			(50, achannel),
-			(50, ac3delay),
-			(50, pcmdelay),
+			(100, vpid),
+			(100, vtype),
+			(100, apid),
+			(100, tpid),
+			(100, spid),
+			(100, pcrpid),
+			(100, ac3pid),
+			(100, achannel),
+			(100, ac3delay),
+			(100, pcmdelay),
 			)
 		
 		entry = [None]
@@ -925,7 +913,7 @@ class ServicesEditor(Screen):
 			if len(entry)==1:
 				entry.append(MultiContentEntryText(
 					pos = (0,0),
-					size = (i[0], 24),
+					size = (i[0], 48),
 					font = 0, flags = RT_HALIGN_CENTER | RT_VALIGN_TOP,
 					text = i[1],
 					border_width = 1,
@@ -933,7 +921,7 @@ class ServicesEditor(Screen):
 			else:
 				entry.append(MultiContentEntryText(
 					pos = (calc_xpos(entry),0),
-					size = (i[0], 24),
+					size = (i[0], 48),
 					font = 0, flags = RT_HALIGN_CENTER | RT_VALIGN_TOP,
 					text = i[1],
 					border_width = 1,
@@ -1078,14 +1066,14 @@ class ServicesEditor(Screen):
 		print("showHelp")
 		if self.cur_service is None:
 			return
-		self["infolist"].l.setFont(0, gFont("Regular", 11))
+		self["infolist"].l.setFont(0, gFont("Regular", 22))
 		calc_xpos = lambda a:a[len(a)-1][1]+a[len(a)-1][3]	# vom letzten Entry addieren wir x_pos und x_size und erhalten x_pos des neu Entry
 		l = []
 #erste Zeile: Servicename
 		entry = [None]
 		entry.append(MultiContentEntryText(
 			pos = (0,0),
-			size = (560, 24),
+			size = (1120, 48),
 			font = 0, flags = RT_HALIGN_CENTER | RT_VALIGN_TOP,
 			text = _("Service"),
 			border_width = 1,
@@ -1095,7 +1083,7 @@ class ServicesEditor(Screen):
 		entry = [None]
 		entry.append(MultiContentEntryText(
 			pos = (0,0),
-			size = (560, 24),
+			size = (1120, 48),
 			font = 0, flags = RT_HALIGN_CENTER | RT_VALIGN_TOP,
 			text = _("Provider"),
 			border_width = 1,
@@ -1105,35 +1093,35 @@ class ServicesEditor(Screen):
 		entry = [None]
 		if self.usk[:4].lower()=="ffff":
 			info3 = (
-				(100, _("Frequency\nMHz")),
-				(60, "Symbolrate\nkSym"),
-				(50, "FEC"),
-				(80, "Modulation"),
-				(55, "Service\nType"),
+				(200, _("Frequency\nMHz")),
+				(120, "Symbolrate\nkSym"),
+				(100, "FEC"),
+				(160, "Modulation"),
+				(110, "Service\nType"),
 			)
 		elif self.usk[:4].lower()=="eeee":
 			info3 = (
-				(100, _("Frequency\nMHz")),
-				(50, "Bandwidth"),
-				(50, "Code rate\nHP"),
-				(50, "Code rate\nLP"),
-				(80, "Modulation"),
-				(55, "Service\nType"),
+				(200, _("Frequency\nMHz")),
+				(100, "Bandwidth"),
+				(100, "Code rate\nHP"),
+				(100, "Code rate\nLP"),
+				(160, "Modulation"),
+				(110, "Service\nType"),
 				)
 		else:
 			info3 = (
-				(100, _("Frequency\nMHz")),
-				(15, "P"),
-				(60, "Symbolrate\nkSym"),
-				(50, "FEC"),
-				(55, "Modulation"),
-				(55, "Service\nType"),
+				(200, _("Frequency\nMHz")),
+				(30, "P"),
+				(120, "Symbolrate\nkSym"),
+				(100, "FEC"),
+				(110, "Modulation"),
+				(110, "Service\nType"),
 				)
 		for i in info3:
 			if len(entry)==1:
 				entry.append(MultiContentEntryText(
 					pos = (0,0),
-					size = (i[0], 24),
+					size = (i[0], 48),
 					font = 0, flags = RT_HALIGN_CENTER | RT_VALIGN_TOP,
 					text = i[1],
 					border_width = 1,
@@ -1141,7 +1129,7 @@ class ServicesEditor(Screen):
 			else:
 				entry.append(MultiContentEntryText(
 					pos = (calc_xpos(entry),0),
-					size = (i[0], 24),
+					size = (i[0], 48),
 					font = 0, flags = RT_HALIGN_CENTER | RT_VALIGN_TOP,
 					text = i[1],
 					border_width = 1,
@@ -1160,23 +1148,23 @@ class ServicesEditor(Screen):
 		pcmdelay = "PCM\nDelay"
 	
 		info4 = (
-			(50, vpid),
-			(50, vtype),
-			(50, apid),
-			(50, tpid),
-			(50, spid),
-			(50, pcrpid),
-			(50, ac3pid),
-			(50, achannel),
-			(50, ac3delay),
-			(50, pcmdelay),
+			(100, vpid),
+			(100, vtype),
+			(100, apid),
+			(100, tpid),
+			(100, spid),
+			(100, pcrpid),
+			(100, ac3pid),
+			(100, achannel),
+			(100, ac3delay),
+			(100, pcmdelay),
 			)
 		entry = [None]
 		for i in info4:
 			if len(entry)==1:
 				entry.append(MultiContentEntryText(
 					pos = (0,0),
-					size = (i[0], 24),
+					size = (i[0], 48),
 					font = 0, flags = RT_HALIGN_CENTER | RT_VALIGN_TOP,
 					text = i[1],
 					border_width = 1,
@@ -1184,7 +1172,7 @@ class ServicesEditor(Screen):
 			else:
 				entry.append(MultiContentEntryText(
 					pos = (calc_xpos(entry),0),
-					size = (i[0], 24),
+					size = (i[0], 48),
 					font = 0, flags = RT_HALIGN_CENTER | RT_VALIGN_TOP,
 					text = i[1],
 					border_width = 1,
