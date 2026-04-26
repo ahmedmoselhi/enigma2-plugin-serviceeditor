@@ -31,7 +31,7 @@ from .Lamedb import Lamedb, VIDEO_PID,AUDIO_PID,TXT_PID,PCR_PID,AC3_PID,VIDEOTYP
 	dxNoSDT,dxDontshow,dxNoDVB,dxHoldName,dxNewFound
 
 import os
-import thread
+import _thread
 import time
 
 class ServiceList(MenuList):
@@ -132,9 +132,9 @@ class ServiceList(MenuList):
 				pos = _("Error")
 			elif pos > 1799:
 				pos = 3600 - pos
-				pos = "%s.%s %s" %(str(pos/10), str(pos%10), self.west)
+				pos = "%s.%s %s" %(str(pos//10), str(pos%10), self.west)
 			elif pos > 0:
-				pos = "%s.%s %s" %(str(pos/10), str(pos%10), self.east)
+				pos = "%s.%s %s" %(str(pos//10), str(pos%10), self.east)
 			else:
 				pos = "0.0"
 		serviceEntry.append(MultiContentEntryText(
@@ -260,10 +260,10 @@ class ServiceEditor(Screen,ConfigListScreen):
 		self.configServicePPid = ConfigHexNumber(default = self.servicePPid)
 		self.configServiceAC3Pid = ConfigHexNumber(default = self.serviceAC3Pid)
 		
-		self.configServiceAChannel = ConfigInteger(default = int(self.serviceAChannel,16), limits = (0,2))				#TODO Überprüfen und ConfigSelection daraus machen
+		self.configServiceAChannel = ConfigInteger(default = int(self.serviceAChannel,16), limits = (0,2))				#TODO ÃœberprÃ¼fen und ConfigSelection daraus machen
 		
-		self.configServiceAC3Delay = ConfigInteger(default = int(self.serviceAC3Delay,16), limits = (0, 65535))		#TODO Limit überprüfen !!!
-		self.configServicePCMDelay = ConfigInteger(default = int(self.servicePCMDelay,16), limits = (0, 65535))		#TODO Limit überprüfen !!!
+		self.configServiceAC3Delay = ConfigInteger(default = int(self.serviceAC3Delay,16), limits = (0, 65535))		#TODO Limit Ã¼berprÃ¼fen !!!
+		self.configServicePCMDelay = ConfigInteger(default = int(self.servicePCMDelay,16), limits = (0, 65535))		#TODO Limit Ã¼berprÃ¼fen !!!
 		
 		self.configSatelliteFlag_dxNoSDT = ConfigYesNo(default = self.flag_dxNoSDT)
 		self.configSatelliteFlag_dxDontshow = ConfigYesNo(default = self.flag_dxDontshow)
@@ -480,7 +480,7 @@ class ServiceHideMenuSelection(Screen):
 		self.setTitle(_("Options for hide"))
 
 	def okbuttonClick(self):
-		print "okbuttonClick"
+		print("okbuttonClick")
 		self.close(self["menulist"].getSelectionIndex())
 	
 	def cancel(self):
@@ -599,13 +599,13 @@ class ServicesEditor(Screen):
 		if row is None:
 			return
 		head = []
-		for x in xrange(2,len(row)):	#bei zwei anfangen, weil eins die Laufschrift ist
+		for x in range(2,len(row)):	#bei zwei anfangen, weil eins die Laufschrift ist
 			head.append([row[x][1]-row[1][3],row[x][3],""])
-		for x in xrange(len(self.row)):
+		for x in range(len(self.row)):
 			head[x][2]= self.row[x][1]
 			if len(self.row[x])>3:		#TODO Graphik
-				head[x].append(True)		#Platzhalter für Graphik
-				
+		print("left")
+		print("right")
 		self["laufschrift"].setEntry()
 		self["head"].setEntries(head)
 		if self.currentSelectedColumn:
@@ -774,7 +774,7 @@ class ServicesEditor(Screen):
 			"3":"auto",
 			}
 
-		print "getInfo"
+		print("getInfo")
 		self["infolist"].l.setFont(0, gFont("Regular", 20))
 		utk = self.usk[:16]
 		name = self.cur_service["name"]
@@ -943,10 +943,10 @@ class ServicesEditor(Screen):
 
 
 	def addService(self):
-		print "addService"
+		print("addService")
 	
 	def editService(self):
-		print "editService"
+		print("editService")
 		if self.cur_service is None:
 			return
 		self.session.openWithCallback(self.finishedServiceEdit, ServiceEditor, self.cur_service)
@@ -954,7 +954,7 @@ class ServicesEditor(Screen):
 	def finishedServiceEdit(self, result):
 		if result is None:
 			return
-		for idx in xrange(len(self.newServiceList)):
+		for idx in range(len(self.newServiceList)):
 			if self.newServiceList[idx][0] == self.usk:
 				self["list"].instance.moveSelectionTo(idx)
 				self.newServiceList[idx] = self["list"].buildEntry(result)
@@ -962,14 +962,14 @@ class ServicesEditor(Screen):
 		self.updateSelection()
 
 	def hideService(self):
-		print "hideService"
+		print("hideService")
 		self.cur_service["flags"]=str(int(self.cur_service.get("flags","0")) ^ dxDontshow)
 		self.newServiceList[self["list"].l.getCurrentSelectionIndex()] =  self["list"].buildEntry(self.cur_service)
 		self.updateSelection()
 		
 	
 	def hideServiceMenu(self):
-		print "hideServiceMenu"
+		print("hideServiceMenu")
 		self.session.openWithCallback(self.serviceHideMenu, ServiceHideMenuSelection, self.cur_service)
 	
 	def serviceHideMenu(self, result):
@@ -977,39 +977,39 @@ class ServicesEditor(Screen):
 			self.cur_service["flags"]=str(int(self.cur_service.get("flags","0")) ^ dxDontshow)
 			self.newServiceList[self["list"].l.getCurrentSelectionIndex()] =  self["list"].buildEntry(self.cur_service)
 		elif result == 1:
-			print "hide all"
-			for idx in xrange(len(self.newServiceList)):
+			print("hide all")
+			for idx in range(len(self.newServiceList)):
 				usk = self.newServiceList[idx][0]
 				service = self.database[usk[:16]]["services"][usk]
 				if service["provider"] == self.cur_service["provider"]:
 					service["flags"]=str(int(service.get("flags","0")) | dxDontshow)
 					self.newServiceList[idx] = self["list"].buildEntry(service)
 		elif result == 2:
-			print "unhide all"
-			for idx in xrange(len(self.newServiceList)):
+			print("unhide all")
+			for idx in range(len(self.newServiceList)):
 				usk = self.newServiceList[idx][0]
 				service = self.database[usk[:16]]["services"][usk]
 				if service["provider"] == self.cur_service["provider"]:
 					service["flags"]=str(int(service.get("flags","0")) & ~dxDontshow)
 					self.newServiceList[idx] = self["list"].buildEntry(service)
 		elif result == 3:
-			print "toggle"
-			for idx in xrange(len(self.newServiceList)):
+			print("toggle")
+			for idx in range(len(self.newServiceList)):
 				usk = self.newServiceList[idx][0]
 				service = self.database[usk[:16]]["services"][usk]
 				if service["provider"] == self.cur_service["provider"]:
 					service["flags"]=str(int(service.get("flags","0")) ^ dxDontshow)
 					self.newServiceList[idx] = self["list"].buildEntry(service)
 		else:
-			print "Menüfehler:",result
+			print("Menfehler:",result)
 			return
 		self.updateSelection()
 
 	def compareColumn(self, a):
-#das lower() dient dazu, dass Groß/Kleinschreibung nicht benutzt wird
-		if self.currentSelectedColumn:
-			if self.row[self.currentSelectedColumn-1][0] == "name":
-				return a[2][7].lower()
+		for idx in range(len(self.newServiceList)):
+		print("openMenu")
+		print("showServiceInfo")
+		print("showHelp")
 			elif self.row[self.currentSelectedColumn-1][0] == "provider":
 				return a[3][7].lower()
 			elif self.row[self.currentSelectedColumn-1][0] == "position":
